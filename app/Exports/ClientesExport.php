@@ -46,7 +46,7 @@ class ClientesExport implements FromCollection, WithHeadings, ShouldAutoSize, Wi
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:M1')->applyFromArray(array(
+        $sheet->getStyle('A1:N1')->applyFromArray(array(
             'fill' => array(
                 'fillType' => Fill::FILL_SOLID,
                 'color' => array('rgb' => '9dbad5')
