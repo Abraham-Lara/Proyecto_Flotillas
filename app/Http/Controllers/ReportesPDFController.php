@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Unidade;
 use App\Models\Verificacione;
+use App\Models\Fumigacione;
 use App\Models\Operadore;
 use Illuminate\Http\Request;
 use PDF;
@@ -2328,7 +2329,8 @@ class Metodos extends Controller
             }
         }
     }
-    public function IndividualCFIO($cli, $final, $inicio, $operador){
+    public function IndividualCFIO($cli, $final, $inicio, $operador)
+    {
         if ($inicio == null) {
             if ($final == null) {
                 if ($cli == 'todos') {
@@ -2483,6 +2485,702 @@ class Metodos extends Controller
             }
         }
     }
+    public function SatisfaccionCIFUT($cli, $inicio, $final, $unidad, $tipou)
+    {
+        if ($inicio == null) {
+            if ($final == null) {
+                if ($cli == 'todos') {
+                    if ($unidad == 'todos') {
+                        if ($tipou == 'Ambas') {
+                            return Fumigacione::join(
+                                'unidades',
+                                function ($join) {
+                                    $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                                }
+                            )
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Habitacion') {
+                            return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Vehiculo') {
+                            return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                    } else {
+                        if ($tipou == 'Ambas') {
+                            return Fumigacione::join(
+                                'unidades',
+                                function ($join) {
+                                    $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                                }
+                            )
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Habitacion') {
+                            return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Vehiculo') {
+                            return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                    }
+                } else {
+                    if ($unidad == 'todos') {
+                        if ($tipou == 'Ambas') {
+                            return Fumigacione::join(
+                                'unidades',
+                                function ($join) {
+                                    $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                                }
+                            )
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Habitacion') {
+                            return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Vehiculo') {
+                            return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                    } else {
+                        if ($tipou == 'Ambas') {
+                            return Fumigacione::join(
+                                'unidades',
+                                function ($join) {
+                                    $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                                }
+                            )
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Habitacion') {
+                            return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Vehiculo') {
+                            return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                    }
+                }
+            } else {
+                if ($cli == 'todos') {
+                    if ($unidad == 'todos') {
+                        if ($tipou == 'Ambas') {
+                            return Fumigacione::join(
+                                'unidades',
+                                function ($join) {
+                                    $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                                }
+                            )
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Habitacion') {
+                            return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Vehiculo') {
+                            return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                    } else {
+                        if ($tipou == 'Ambas') {
+                            return Fumigacione::join(
+                                'unidades',
+                                function ($join) {
+                                    $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                                }
+                            )
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Habitacion') {
+                            return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Vehiculo') {
+                            return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                    }
+                } else {
+                    if ($unidad == 'todos') {
+                        if ($tipou == 'Ambas') {
+                            return Fumigacione::join(
+                                'unidades',
+                                function ($join) {
+                                    $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                                }
+                            )
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Habitacion') {
+                            return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Vehiculo') {
+                            return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                    } else {
+                        if ($tipou == 'Ambas') {
+                            return Fumigacione::join(
+                                'unidades',
+                                function ($join) {
+                                    $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                                }
+                            )
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Habitacion') {
+                            return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                        if ($tipou == 'Vehiculo') {
+                            return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                                ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                                ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                                ->where('clientes.nombrecompleto', '=', $cli)
+                                ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                                ->where('unidades.id', '=', $unidad)
+                                ->select(
+                                    'fumigaciones.numerofumigacion',
+                                    'clientes.nombrecompleto',
+                                    'fumigaciones.unidad',
+                                    'fumigaciones.fechaprogramada',
+                                    'fumigaciones.id_fumigador',
+                                    'clientes.razonsocial',
+                                    'clientes.direccionfisica',
+                                    'fumigaciones.status',
+                                )->get();
+                        }
+                    }
+                }
+            }
+        } else {
+            if ($cli == 'todos') {
+                if ($unidad == 'todos') {
+                    if ($tipou == 'Ambas') {
+                        return Fumigacione::join(
+                            'unidades',
+                            function ($join) {
+                                $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                            }
+                        )
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                    if ($tipou == 'Habitacion') {
+                        return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                    if ($tipou == 'Vehiculo') {
+                        return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                } else {
+                    if ($tipou == 'Ambas') {
+                        return Fumigacione::join(
+                            'unidades',
+                            function ($join) {
+                                $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                            }
+                        )
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->where('unidades.id', '=', $unidad)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                    if ($tipou == 'Habitacion') {
+                        return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->where('unidades.id', '=', $unidad)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                    if ($tipou == 'Vehiculo') {
+                        return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->where('unidades.id', '=', $unidad)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                }
+            } else {
+                if ($unidad == 'todos') {
+                    if ($tipou == 'Ambas') {
+                        return Fumigacione::join(
+                            'unidades',
+                            function ($join) {
+                                $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                            }
+                        )
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('clientes.nombrecompleto', '=', $cli)
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                    if ($tipou == 'Habitacion') {
+                        return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                            ->where('clientes.nombrecompleto', '=', $cli)
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                    if ($tipou == 'Vehiculo') {
+                        return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                            ->where('clientes.nombrecompleto', '=', $cli)
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                } else {
+                    if ($tipou == 'Ambas') {
+                        return Fumigacione::join(
+                            'unidades',
+                            function ($join) {
+                                $join->on('unidades.serieunidad', '=', 'fumigaciones.unidad')->orOn('unidades.direccion', '=', 'fumigaciones.unidad');
+                            }
+                        )
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('clientes.nombrecompleto', '=', $cli)
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->where('unidades.id', '=', $unidad)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                    if ($tipou == 'Habitacion') {
+                        return Fumigacione::join('unidades', 'unidades.direccion', '=', 'fumigaciones.unidad')
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('unidades.tipo', '=', 'Unidad Habitacional o Comercial')
+                            ->where('clientes.nombrecompleto', '=', $cli)
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->where('unidades.id', '=', $unidad)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                    if ($tipou == 'Vehiculo') {
+                        return Fumigacione::join('unidades', 'unidades.serieunidad', '=', 'fumigaciones.unidad')
+                            ->join('clientes', 'clientes.nombrecompleto', '=', 'unidades.cliente')
+                            ->where('unidades.tipo', '=', 'Unidad Vehicular')
+                            ->where('clientes.nombrecompleto', '=', $cli)
+                            ->whereDate('fumigaciones.fechaprogramada', '<=', $final)
+                            ->whereDate('fumigaciones.fechaprogramada', '>=', $inicio)
+                            ->where('unidades.id', '=', $unidad)
+                            ->select(
+                                'fumigaciones.numerofumigacion',
+                                'clientes.nombrecompleto',
+                                'fumigaciones.unidad',
+                                'fumigaciones.fechaprogramada',
+                                'fumigaciones.id_fumigador',
+                                'clientes.razonsocial',
+                                'clientes.direccionfisica',
+                                'fumigaciones.status',
+                            )->get();
+                    }
+                }
+            }
+        }
+    }
 }
 class ReportesPDFController extends Metodos
 {
@@ -2594,5 +3292,23 @@ class ReportesPDFController extends Metodos
         /* A3 -> "a3" => array(0,0,841.89,1190.55), */
         $pdf->setPaper(array(0, 0, 838, 1188), 'portrait');
         return $pdf->download('Reporte_Individual_Operador.pdf');
+    }
+    public function ReporteSatisfaccionPDF(Request $request)
+    {
+        $cli = $request['filtrocli'];
+        $final = "" . $request['filtrofechafinal'];
+        $inicio = "" . $request['filtrofechainicio'];
+        $unidad = "" . $request['filtrounid'];
+        $tipou = "" . $request['filtrotuni'];
+        $unidades = Metodos::SatisfaccionCIFUT($cli, $inicio, $final, $unidad, $tipou);
+        $pdf = PDF::loadView('pdf.ReporteSatisfaccion', [
+            'unidades' => $unidades,
+            'nombre' => 'Reporte Satisfaccion',
+        ]);
+        /* landscape->HORIZONTAL */
+        /* portrait->vertical */
+        /* A3 -> "a3" => array(0,0,841.89,1190.55), */
+        $pdf->setPaper(array(0, 0, 838, 1188), 'portrait');
+        return $pdf->download('Reporte_Satisfaccion.pdf');
     }
 }

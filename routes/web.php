@@ -189,6 +189,7 @@ Route::controller(ReportesExcelController::class)->group(function(){
 Route::post('pdf/reportes_flotillas', [App\Http\Controllers\ReportesPDFController::class, 'ReporteFlotillaPDF'])->name('pdf.reporte_flotillaspdf');
 Route::post('pdf/datos_unidades',function(){return view('pdf.datos_unidades');})->name('pdf.datos_unidades');
 Route::post('pdf/datos_operadores',function(){return view('pdf.datos_operadores');})->name('pdf.datos_operadores');
+Route::post('pdf/datos_unidades_ambas',function(){return view('pdf.datos_unidades_ambas');})->name('pdf.datos_unidades_ambas');
 /// ================================================== REPORTE ==================================================
 Route::get('/reportes_seguros', [App\Http\Controllers\ReportesTablasController::class, 'reporte_seguros'])->name('tabla_reportes.reporte_seguros');
 ///EXCEL SEGUROS
@@ -250,6 +251,11 @@ Route::controller(ReportesExcelController::class)->group(function(){
 Route::post('pdf/reportes_individualv', [App\Http\Controllers\ReportesPDFController::class, 'ReporteIndividualVPDF'])->name('pdf.reportes_individualvpdf');
 /// ================================================== REPORTE ==================================================
 Route::get('/reportes_satisfaccion', [App\Http\Controllers\ReportesTablasController::class, 'reporte_satisfaccion'])->name('tabla_reportes.reporte_satisfaccion');
+Route::controller(ReportesExcelController::class)->group(function(){
+    Route::post('/reportes_satisfaccion/excel', 'reportes_satisfaccionexcel')->name('tabla_reportes.reportes_satisfaccionexcel');
+    /* Route::post('log-import', 'import')->name('log.import'); */
+});
+Route::post('pdf/reportes_satisfaccion', [App\Http\Controllers\ReportesPDFController::class, 'ReporteSatisfaccionPDF'])->name('pdf.reportes_satisfaccionpdf');
 /// ================================================== REPORTE ==================================================
 ///--------------------------------------CHECKLIST UNIDADES--------------------------------------------------------------------
 Route::get('/reportes_bd', [App\Http\Controllers\ReportesController::class, 'reporte_bd'])->name('tabla_reportes.reporte_bd');

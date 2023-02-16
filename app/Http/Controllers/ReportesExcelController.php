@@ -13,6 +13,7 @@ use App\Exports\ReporteFlotillasExport;
 use App\Exports\ReporteFumigacionesExport;
 use App\Exports\ReporteIndividualExport;
 use App\Exports\ReporteIndividualVExport;
+use App\Exports\ReporteSatisfaccionExport;
 use App\Exports\ReporteSemanalExport;
 use App\Exports\ReporteVeriExport;
 use App\Exports\ReposteSegurosExport;
@@ -167,6 +168,19 @@ class ReportesExcelController extends Controller
             if ($tipo == 'Ambas') {
                 return (new ReporteIndividualVExport($tipo, $cli, $inicio, $final, $unidad))->download('Reporte_Individual_Vehicular_Ambas_Veri_' . str_replace(' ', '_', $cli) . '.xlsx');
             }
+        }
+    }
+    public function reportes_satisfaccionexcel(Request $request)
+    {
+        $cli = $request['filtrocli'];
+        $final = "" . $request['filtrofechafinal'];
+        $inicio = "" . $request['filtrofechainicio'];
+        $unidad = "" . $request['filtrounid'];
+        $tipou = "" . $request['filtrotuni'];
+        if ($cli == 'todos') {
+            return (new ReporteSatisfaccionExport($cli, $inicio, $final, $unidad, $tipou))->download('Reporte_Satisfaccion.xlsx');
+        } else {
+            return (new ReporteSatisfaccionExport($cli, $inicio, $final, $unidad, $tipou))->download('Reporte_Satisfaccion_' . str_replace(' ', '_', $cli) . '.xlsx');
         }
     }
     /* ============================================================================================================= */

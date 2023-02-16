@@ -157,8 +157,25 @@ class ReportesTablasController extends Controller
     }
     public function reporte_satisfaccion()
     {
-        $unidades = Unidade::all();
-        return view('tabla_reportes.reporte_satisfaccion', compact('unidades'));
+        $usuario = \Auth::user();
+        $rol = $usuario->rol;
+        $user = $usuario->name;
+        if ($rol == 'SuperAdministrador') {
+            $clientes = Cliente::all();
+            $fumigaciones=Fumigacione::all();
+            $unidades = Unidade::all();
+        }
+        if ($rol == 'Administrador') {
+            $clientes = Cliente::all();
+            $fumigaciones=Fumigacione::all();
+            $unidades = Unidade::all();
+        }
+        if ($rol == 'Usuario') {
+            $clientes = Cliente::where('nombrecompleto','=',$usuario->clientes)->get();
+            $fumigaciones=Fumigacione::all();
+            $unidades = Unidade::where('cliente', '=', $clientes)->get();
+        }
+        return view('tabla_reportes.reporte_satisfaccion', compact('unidades','fumigaciones','clientes'));
     }
     public function reporte_bd()
     {
