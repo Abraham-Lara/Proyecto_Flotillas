@@ -18,6 +18,7 @@
                                         class="fas fa-file-excel"></i></a> --}}
                                 {{-- <input type="text" class="form-control pull-right" style="width:20%" id="search"
                                     placeholder="Buscar...."> --}}
+                                    <br><br>
                                 <thead  style="background-color:#95b8f6">
                                     <th style="display: none;">ID</th>
                                     <th style="color:#fff;">Nombre Folio</th>
@@ -95,10 +96,10 @@
                                             {{--  --}}
                                             {{-- ====================== --}}
                                             <td>
-                                                <button type="submit" class="btn btn-info"
+                                                <button type="submit" class="btn btn-sm" style="background-color: #9dbad5"
                                                     onclick="$('#edit{{ str_replace(' ', '', $folio->id) }}').modal('show')">
-                                                    <i class="fas fa-edit"></i></button>
-                                                <button type="submit" class="btn btn-danger"
+                                                    <i class="fas fa-pencil-alt" ></i></button>
+                                                <button type="submit" class="btn btn-sm" style="background-color: #ff8097"
                                                     onclick="$('#delete{{ str_replace(' ', '', $folio->id) }}').modal('show')">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>

@@ -6,8 +6,12 @@ use App\Models\Unidade;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ReporteFumigacionesExport implements FromCollection, WithHeadings
+class ReporteFumigacionesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -218,6 +222,27 @@ class ReporteFumigacionesExport implements FromCollection, WithHeadings
         return [
             "CLIENTE",
             "MARCA", "AÑO UNIDAD", "PLACAS", "TIPO UNIDAD", "RAZON SOCIAL UNIDAD", "FECHA ULTIMA FUMIGACIÓN"
+        ];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        $sheet->getStyle('A1:G1')->applyFromArray(array(
+            'fill' => array(
+                'fillType' => Fill::FILL_SOLID,
+                'color' => array('rgb' => '9dbad5')
+            )
+            ));
+        return [
+
+
+            // Style the first row as bold text.
+            1    => ['font' => ['bold' => true]],
+           
+            
+
+           
+
         ];
     }
 }

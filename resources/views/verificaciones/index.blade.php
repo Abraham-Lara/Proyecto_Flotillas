@@ -24,11 +24,12 @@
                         <div class="card-body">
                             <a class="btn btn-warning" href="{{ route('verificaciones.crear', $unidad) }}">Nuevo</a>
                             <table id='tablas-style' class="table table-striped mt-2">
-                                <a class="btn btn-success" href="{{ route('verificaciones.export', $unidad) }}"><i
+                                <a class="btn btn-md" style="background-color: #7caa98" href="{{ route('verificaciones.export', $unidad) }}"><i
                                         class="fas fa-file-excel"></i></a>
                                 {{-- <input type="text" class="form-control pull-right" style="width:20%" id="search"
                                     placeholder="Buscar...."> --}}
-                                <thead style="background-color:#6777ef">
+                                    <br><br>
+                                    <thead style="background-color:#95b8f6">
                                     <th style="display: none;">ID</th>
                                     <th style="color:#fff;">Identificador</th>
                                     <th style="color:#fff;">Información</th>
@@ -45,7 +46,8 @@
                                             <td>{{ $verificacione->noverificacion }}</td>
                                             {{-- Boton MODAL --}}
                                             <td>
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-sm text-dark"
+                                                style="background-color: #9dbad5"
                                                     onclick="$('#{{ $a }}').modal('show')">
                                                     Detalles
                                                 </button>
@@ -53,18 +55,19 @@
                                             {{-- ====================== --}}
                                             <td>
                                                 @if ($verificacione->estado == 'Activo')
-                                                    <h5><span class="badge badge-success">Activo</span>
-                                                    </h5>
+                                                    <span class="badge badge-success">Activo</span>
+                                                    
                                                 @else
-                                                    <h5><span class="badge badge-danger">Inactivo</span>
-                                                    </h5>
+                                                    <span class="badge badge-danger">Inactivo</span>
+                                                
                                                 @endif
                                             </td>
                                             <td>
-                                                <a class="btn btn-info"
+                                                <a class="btn btn-sm" style="background-color: #9dbad5"
                                                     href="{{ route('verificaciones.edit', $verificacione->id) }}">
-                                                    <i class="fas fa-edit"></i></a>
-                                                <button type="submit" class="btn btn-danger"
+                                                    <i class="fas fa-pencil-alt"></i></a>
+                                                <button type="submit" class="btn btn-sm"
+                                                style="background-color: #ff8097"
                                                     onclick="$('#delete{{ $a }}').modal('show')">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>

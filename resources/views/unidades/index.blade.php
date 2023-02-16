@@ -19,11 +19,13 @@
                                 <a class="btn btn-warning" href="{{ route('unidades.crear', $usuario) }}">Nuevo</a>
                             @endcan
                             <table id='tablas-style' class="table table-striped mt-2">
-                                <a class="btn btn-success" href="{{ route('unidades.export', $usuario) }}"><i
-                                        class="fas fa-file-excel"></i></a>
+                                <a class="btn btn-md" style="background-color: #7caa98"
+                                    href="{{ route('unidades.export', $usuario) }}"><i class="fas fa-file-excel"></i></a>
                                 {{-- <input type="text" class="form-control pull-right" style="width:20%" id="search"
                                     placeholder="Buscar...."> --}}
-                                <thead style="background-color:#6777ef">
+                                <br>
+                                <br>
+                                <thead style="background-color:#95b8f6">
                                     <th style="display: none;">ID</th>
                                     <th style="color:#fff;">Placas/<br>Dirección</th>
                                     <th style="color:#fff;">Información</th>
@@ -49,7 +51,8 @@
                                             @endif
                                             {{-- Boton MODAL --}}
                                             <td>
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-sm text-dark"
+                                                    style="background-color: #9dbad5"
                                                     onclick="$('#{{ $a }}').modal('show')">
                                                     Detalles
                                                 </button>
@@ -57,17 +60,15 @@
                                             {{-- ================================ //BUG:SEGUROS ================================ --}}
                                             <td>
                                                 @if ($unidade->tipo == 'Unidad Habitacional o Comercial')
-                                                    <h6><span class="badge badge-dark">
-                                                            NO APLICA
-                                                        </span>
-                                                    </h6>
+                                                    <span class="badge badge-dark">
+                                                        No aplica
+                                                    </span>
                                                 @endif
                                                 @if ($unidade->tipo == 'Unidad Vehicular')
                                                     @if ($unidade->seguro == 'Sin Seguro')
                                                         <h6><span class="badge badge-danger"><a class="link-light"
-                                                                    href="{{ route('unidades.show', $unidad = $unidade->serieunidad) }}">Sin
-                                                                    <br> Seguro</a></span>
-                                                        </h6>
+                                                                href="{{ route('unidades.show', $unidad = $unidade->serieunidad) }}">Sin
+                                                                Seguro</a></span></h6>
                                                     @else
                                                         {{-- ===================== CALCULO_DE_FECHAS_SEGURO ===================== --}}
                                                         @php
@@ -145,7 +146,7 @@
                                                                     }
                                                                 }
                                                                 /* CALCULO DE MESES EXACTOS */
-
+                                                            
                                                                 $dias_resto = $calcular;
                                                                 $opc = 2;
                                                                 for ($i = 0; $i <= $opc; $i++) {
@@ -232,17 +233,15 @@
                                             {{-- ================================ //BUG: V.AMBIENTAL ================================ --}}
                                             <td>
                                                 @if ($unidade->tipo == 'Unidad Habitacional o Comercial')
-                                                    <h6><span class="badge badge-dark">
-                                                            NO APLICA
-                                                        </span>
-                                                    </h6>
+                                                    <span class="badge badge-dark">
+                                                        No aplica
+                                                    </span>
                                                 @endif
                                                 @if ($unidade->tipo == 'Unidad Vehicular')
                                                     @if ($unidade->verificacion == 'Sin Verificación')
                                                         <h6><span class="badge badge-danger"><a class="link-light"
-                                                                    href="{{ route('verificaciones.show', $unidad = $unidade->serieunidad) }}">Sin
-                                                                    <br> Verificación</a></span>
-                                                        </h6>
+                                                                href="{{ route('verificaciones.show', $unidad = $unidade->serieunidad) }}">Sin
+                                                                verificación</a></span></h6>
                                                     @else
                                                         {{-- ===================== CALCULO_DE_FECHAS_VERIFICACIONES ===================== --}}
                                                         @php
@@ -320,7 +319,7 @@
                                                                     }
                                                                 }
                                                                 /* CALCULO DE MESES EXACTOS */
-
+                                                            
                                                                 $dias_resto = $calcular;
                                                                 $opc = 2;
                                                                 for ($i = 0; $i <= $opc; $i++) {
@@ -407,17 +406,15 @@
                                             {{-- ================================ //BUG: V.FISICA ================================ --}}
                                             <td>
                                                 @if ($unidade->tipo == 'Unidad Habitacional o Comercial')
-                                                    <h6><span class="badge badge-dark">
-                                                            NO APLICA
-                                                        </span>
-                                                    </h6>
+                                                    <span class="badge badge-dark">
+                                                        No aplica
+                                                    </span>
                                                 @endif
                                                 @if ($unidade->tipo == 'Unidad Vehicular')
                                                     @if ($unidade->verificacion2 == 'Sin Verificación')
                                                         <h6><span class="badge badge-danger"><a class="link-light"
-                                                                    href="{{ route('verificacionesfisicomecanicas.show', $unidad = $unidade->serieunidad) }}">Sin
-                                                                    <br>Verificación</a></span>
-                                                        </h6>
+                                                                href="{{ route('verificacionesfisicomecanicas.show', $unidad = $unidade->serieunidad) }}">Sin
+                                                                verificación</a></span></h6>
                                                     @else
                                                         {{-- ===================== CALCULO_DE_FECHAS_VERIFICACIONES ===================== --}}
                                                         @php
@@ -495,7 +492,7 @@
                                                                     }
                                                                 }
                                                                 /* CALCULO DE MESES EXACTOS */
-
+                                                            
                                                                 $dias_resto = $calcular;
                                                                 $opc = 2;
                                                                 for ($i = 0; $i <= $opc; $i++) {
@@ -582,17 +579,15 @@
                                             {{-- ================================ //BUG:MANTENIMIENTO ================================ --}}
                                             <td>
                                                 @if ($unidade->tipo == 'Unidad Habitacional o Comercial')
-                                                    <h6><span class="badge badge-dark">
-                                                            NO APLICA
-                                                        </span>
-                                                    </h6>
+                                                    <span class="badge badge-dark">
+                                                        No aplica
+                                                    </span>
                                                 @endif
                                                 @if ($unidade->tipo == 'Unidad Vehicular')
                                                     @if ($unidade->mantenimiento == 'Sin Mantenimiento')
                                                         <h6><span class="badge badge-danger"><a class="link-light"
-                                                                    href="{{ route('mantenimientos.show', $unidad = $unidade->serieunidad) }}">Sin
-                                                                    <br> Mantenimiento</a></span>
-                                                        </h6>
+                                                                href="{{ route('mantenimientos.show', $unidad = $unidade->serieunidad) }}">Sin
+                                                                mantenimiento</a></span></h6>
                                                     @else
                                                         @if ($unidade->tipomantenimiento == 'Fecha')
                                                             {{-- ===================== CALCULO_DE_FECHAS_MANTENIMIENTO ===================== --}}
@@ -676,7 +671,7 @@
                                                                         }
                                                                     }
                                                                     /* CALCULO DE MESES EXACTOS */
-
+                                                                
                                                                     $dias_resto = $calcular;
                                                                     $opc = 2;
                                                                     for ($i = 0; $i <= $opc; $i++) {
@@ -823,15 +818,15 @@
                                                 @if ($unidade->fumigacion == 'Sin Fumigación')
                                                     @if ($unidade->tipo == 'Unidad Habitacional o Comercial')
                                                         <h6><span class="badge badge-danger"><a class="link-light"
-                                                                    href="{{ route('fumigaciones.show', $unidad = $unidade->direccion) }}">Sin
-                                                                    <br>Fumigación</a></span>
-                                                        </h6>
+                                                                href="{{ route('fumigaciones.show', $unidad = $unidade->direccion) }}">Sin
+                                                                fumigación</a></span></h6>
                                                     @endif
                                                     @if ($unidade->tipo == 'Unidad Vehicular')
-                                                        <h6><span class="badge badge-danger"><a class="link-light"
-                                                                    href="{{ route('fumigaciones.show', $unidad = $unidade->serieunidad) }}">Sin
-                                                                    <br>Fumigación</a></span>
-                                                        </h6>
+                                                       <h6> <span class="badge badge-danger"><a class="link-light"
+                                                                href="{{ route('fumigaciones.show', $unidad = $unidade->serieunidad) }}">Sin
+                                                                fumigación
+                                                            </a></h6>
+                                                        </span>
                                                     @endif
                                                 @else
                                                     {{-- ===================== CALCULO_DE_FECHAS_FUMIGACION ===================== --}}
@@ -915,7 +910,7 @@
                                                                 }
                                                             }
                                                             /* CALCULO DE MESES EXACTOS */
-
+                                                        
                                                             $dias_resto = $calcular;
                                                             $opc = 2;
                                                             for ($i = 0; $i <= $opc; $i++) {
@@ -1044,7 +1039,7 @@
                                                                 <span class="badge badge-danger">
                                                                     <a class="link-light"
                                                                         href="{{ route('fumigaciones.show', $unidad = $unidade->direccion) }}">Expira
-                                                                        en: <br>
+                                                                        en:
                                                                         {{ $dias_exactos }} dias
                                                                     </a> </span>
                                                             @endif
@@ -1052,7 +1047,7 @@
                                                                 <span class="badge badge-danger">
                                                                     <a class="link-light"
                                                                         href="{{ route('fumigaciones.show', $unidad = $unidade->serieunidad) }}">Expira
-                                                                        en: <br>
+                                                                        en:
                                                                         {{ $dias_exactos }} dias
                                                                     </a> </span>
                                                             @endif
@@ -1062,16 +1057,16 @@
                                                                 <span class="badge badge-danger">
                                                                     <a class="link-light"
                                                                         href="{{ route('fumigaciones.show', $unidad = $unidade->direccion) }}">
-                                                                        Fumigación
-                                                                        <br> Expirada
+                                                                        Fumigación expirada
+
                                                                     </a> </span>
                                                             @endif
                                                             @if ($unidade->tipo == 'Unidad Vehicular')
                                                                 <span class="badge badge-danger">
                                                                     <a class="link-light"
                                                                         href="{{ route('fumigaciones.show', $unidad = $unidade->serieunidad) }}">
-                                                                        Fumigación
-                                                                        <br> Expirada
+                                                                        Fumigación expirada
+
                                                                     </a> </span>
                                                             @endif
                                                         @endif
@@ -1079,10 +1074,11 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a class="btn btn-info"
+                                                <a class="btn btn-sm" style="background-color: #9dbad5"
                                                     href="{{ route('unidades.edit', $unidade->id) }}">
-                                                    <i class="fas fa-edit"></i></a>
-                                                <button type="submit" class="btn btn-danger"
+                                                    <i class="fas fa-pencil-alt"></i></a>
+                                                <button type="submit" class="btn btn-sm"
+                                                    style="background-color: #ff8097"
                                                     onclick="$('#delete{{ $a }}').modal('show')">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>

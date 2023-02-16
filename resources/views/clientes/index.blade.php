@@ -40,44 +40,44 @@
                                             <td>{{ $cliente->nombrecompleto }}</td>
                                             {{-- Boton MODAL --}}
                                             <td>
-                                                <button type="button" class="btn btn-md text-dark" style="background-color: #9dbad5"
+                                                <button type="button" class="btn btn-sm text-dark" style="background-color: #9dbad5"
                                                     onclick="$('#{{ str_replace(' ', '', $cliente->nombrecompleto) }}').modal('show')">
                                                     Detalles
                                                 </button>
                                             </td>
                                             {{-- ====================== --}}
                                             <td>
-                                                <a  class="btn btn-md" style="background-color: #7caa98"
+                                                <a  class="btn btn-sm" style="background-color: #7caa98"
                                                     href="{{ route('clientes.show', $usuario = $cliente->nombrecompleto) }}">
                                                     <i class="fas fa-bus"></i>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a  class="btn btn-md" style="background-color: #7caa98"
+                                                <a  class="btn btn-sm" style="background-color: #7caa98"
                                                     href="{{ route('operadores.show', $usuario = $cliente->nombrecompleto) }}">
                                                     <i class="fas fa-address-card"></i>
                                                 </a>
                                             </td>
                                             <td>
                                                 @if ($cliente->statuspago == 'Sin Servicio')
-                                                    <h5><span class="badge badge-dark">{{ $cliente->statuspago }}</span>
-                                                    </h5>
+                                                    <span class="badge badge-dark">{{ $cliente->statuspago }}</span>
+                                                    
                                                 @endif
                                                 @if ($cliente->statuspago == 'Por Confirmar')
-                                                    <h5><span class="badge badge-warning">{{ $cliente->statuspago }}</span>
-                                                    </h5>
+                                                    <span class="badge badge-warning">{{ $cliente->statuspago }}</span>
+                                                    
                                                 @endif
                                                 @if ($cliente->statuspago == 'En Ejecucion')
-                                                    <h6><span class="badge badge-primary">{{ $cliente->statuspago }}</span>
-                                                    </h6>
+                                                    <span class="badge badge-primary">{{ $cliente->statuspago }}</span>
+                                                    
                                                 @endif
                                                 @if ($cliente->statuspago == 'No Pagado')
-                                                    <h5><span class="badge badge-pill badge-danger">{{ $cliente->statuspago }}</span>
-                                                    </h5>
+                                                    <span class="badge badge-danger">{{ $cliente->statuspago }}</span>
+                                                    
                                                 @endif
                                                 @if ($cliente->statuspago == 'Pagado')
-                                                    <h5><span class="badge badge-success">{{ $cliente->statuspago }}</span>
-                                                    </h5>
+                                                    <span class="badge badge-success">{{ $cliente->statuspago }}</span>
+                                                    
                                                 @endif
                                             </td>
                                             @can('general-rol')

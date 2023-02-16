@@ -25,12 +25,13 @@
                             <a class="btn btn-warning"
                                 href="{{ route('verificacionesfisicomecanicas.crear', $unidad) }}">Nuevo</a>
                             <table id='tablas-style' class="table table-striped mt-2">
-                                <a class="btn btn-success"
+                                <a class="btn btn-md" style="background-color: #7caa98"
                                     href="{{ route('verificacionesfisicomecanicas.export', $unidad) }}"><i
                                         class="fas fa-file-excel"></i></a>
                                 {{-- <input type="text" class="form-control pull-right" style="width:20%" id="search"
                                     placeholder="Buscar...."> --}}
-                                <thead style="background-color:#6777ef">
+                                <thead style="background-color:#95b8f6">
+                                    <br><br>
                                     <th style="display: none;">ID</th>
                                     <th style="color:#fff;">Identificador</th>
                                     <th style="color:#fff;">Información</th>
